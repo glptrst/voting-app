@@ -1,0 +1,14 @@
+{
+    "name": "voting-app",
+    "version": "1.0.0",
+    "description": "An application to create and participate in polls",
+    "author": "gp",
+    "scripts": {
+        "start": "node ./app"
+    },
+    "license": "GPL-3.0",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4"
+    }
+}

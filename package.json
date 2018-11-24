@@ -4,7 +4,7 @@
     "description": "An application to create and participate in polls",
     "author": "gp",
     "scripts": {
-        "start": "node ./app"
+        "start": "node ./server.js"
     },
     "license": "GPL-3.0",
     "dependencies": {

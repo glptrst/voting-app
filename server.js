@@ -1,3 +1,4 @@
+var config = require('./config');
 let express = require('express');
 let bodyParser = require('body-parser');
 let ejs = require('ejs');
@@ -34,6 +35,6 @@ app.use((err, req, res, next) => {
 });
 
 // listen on port 3000
-app.listen(3000, () => {
+app.listen(config.PORT, () => {
     console.log('Listening on port 3000');
 });

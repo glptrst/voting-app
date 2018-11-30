@@ -2,7 +2,14 @@ var config = require('./config');
 let express = require('express');
 let bodyParser = require('body-parser');
 let ejs = require('ejs');
+let mongoose = require('mongoose');
 let app = express();
+
+// mongodb connection
+mongoose.connect(config.DBURI);
+let db = mongoose.connection;
+// mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
 
 // parse incoming requests
 app.use(bodyParser.json());

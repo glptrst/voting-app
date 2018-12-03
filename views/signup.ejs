@@ -1,0 +1,31 @@
+<%- include('header'); -%>
+
+<h2> Sign up </h2>
+
+<form class="form-signup" method='POST' action="/signup">
+    <div class="form-label-group">
+        <label for="inputUsername">Username:</label>
+        <input type="text" id="inputUsername" name="inputUsername" class="form-control" placeholder="Username" required autofocus>
+    </div>
+
+    <div class="form-label-group">
+        <label for="inputEmail">Email address:</label>
+        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required>
+    </div>
+
+    <div class="form-label-group">
+        <label for="inputPassword">Password:</label>
+        <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
+    </div>
+
+    <div class="form-label-group">
+        <label for="inputConfirmPassword">Confirm password:</label>
+        <input type="password" id="inputConfirmPassword" name="inputConfirmPassword" class="form-control" placeholder="Confirm Password" required>
+    </div>
+
+    </br>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
+
+<%- include('footer'); -%>

@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+let User = require('../models/user');
 
 // GET /
 router.get('/', (req, res, next) => {
@@ -18,8 +19,35 @@ router.get('/signup', (req, res, next) => {
 
 // POST /signup
 router.post('/signup', (req, res, next) => {
-    // todo
-  return res.send('post request received!');
+    if (req.body.inputUsername && req.body.inputEmail &&
+    	req.body.inputPassword && req.body.inputConfirmPassword)
+    {
+    	if (req.body.inputPassword === req.body.inputConfirmPassword) {
+
+    	    let userData = {
+    		username: req.body.inputUsername,
+    		email: req.body.inputEmail,
+    		password: req.body.inputPassword
+    	    };
+	    
+    	    User.create(userData, (err, user) => {
+    		if (err)
+    		    return next(err);
+    		else
+    		    return res.redirect('/');
+		    
+    	    });
+
+    	} else {
+    	    let err = new Error('Passwords do not match');
+    	    err.status = 400;
+    	    return next(err);
+    	}
+    } else {
+    	let err = new Error('All fields required');
+    	err.status = 400;
+    	return next(err);
+    }
 });
 
 module.exports = router;

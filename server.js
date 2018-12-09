@@ -1,9 +1,17 @@
-var config = require('./config');
+var config = require('./config.js');
 let express = require('express');
 let bodyParser = require('body-parser');
 let ejs = require('ejs');
 let mongoose = require('mongoose');
+let session = require('express-session');
 let app = express();
+
+// use sessions for traking logins
+app.use(session({
+    secret: 'boia de',
+    resave: true,
+    saveUninitialized: false
+}));
 
 // mongodb connection
 mongoose.connect(config.DBURI);

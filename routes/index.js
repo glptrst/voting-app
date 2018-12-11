@@ -1,20 +1,25 @@
 let express = require('express');
 let router = express.Router();
-let User = require('../models/user');
+let User = require('../models/user.js');
 
 // GET /
 router.get('/', (req, res, next) => {
-  return res.render('index', { title: 'Home' });
+    return res.render('index', { title: 'Home' });
 });
 
 // GET /signin
 router.get('/signin', (req, res, next) => {
-  return res.render('signin', { title: 'Sign In' });
+    return res.render('signin', { title: 'Sign In' });
+});
+
+// POST /signin
+router.post('/signin', (req, res, next) => {
+    return res.send(req.body);
 });
 
 // GET /signup
 router.get('/signup', (req, res, next) => {
-  return res.render('signup', { title: 'Sign Up' });
+    return res.render('signup', { title: 'Sign Up' });
 });
 
 // POST /signup
@@ -35,7 +40,7 @@ router.post('/signup', (req, res, next) => {
     		    return next(err);
     		else
     		    return res.redirect('/');
-		    
+		
     	    });
 
     	} else {

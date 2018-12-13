@@ -14,7 +14,22 @@ router.get('/signin', (req, res, next) => {
 
 // POST /signin
 router.post('/signin', (req, res, next) => {
-    return res.send(req.body);
+    if (req.body.inputEmail && req.body.inputPassword) {
+	User.authenticate(req.body.inputEmail, req.body.inputPassword, (error, user) => {
+	    if (error || !user) {
+		let err = new Error('Wrong email or password.');
+		err.status = 401;
+		return next(err);
+	    } else {
+		req.session.userId = user._id;
+		return res.redirect('/');
+	    }
+	});
+    } else {
+	let err = new Error('Email and password are required to sign in...');
+	err.status = 401;
+	return next(err);
+    }
 });
 
 // GET /signup
@@ -35,12 +50,14 @@ router.post('/signup', (req, res, next) => {
     		password: req.body.inputPassword
     	    };
 	    
+	    // use schema's `create` method to insert document into Mongo
     	    User.create(userData, (err, user) => {
     		if (err)
     		    return next(err);
-    		else
+    		else {
+		    req.session.userId = user._id;
     		    return res.redirect('/');
-		
+		}
     	    });
 
     	} else {

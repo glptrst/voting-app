@@ -7,6 +7,23 @@ router.get('/', (req, res, next) => {
     return res.render('index', { title: 'Home' });
 });
 
+// GET /profile
+router.get('/profile', (req, res, next) => {
+    return res.render('profile', { title: 'Profile' });
+});
+
+// GET /signout
+router.get('/signout', (req, res, next) => {
+    if (req.session) {
+	req.session.destroy(err => {
+	    if (err)
+		return next(err);
+	    else
+		return res.redirect('/');
+	});
+    }
+});
+
 // GET /signin
 router.get('/signin', (req, res, next) => {
     return res.render('signin', { title: 'Sign In' });
@@ -22,7 +39,7 @@ router.post('/signin', (req, res, next) => {
 		return next(err);
 	    } else {
 		req.session.userId = user._id;
-		return res.redirect('/');
+		return res.redirect('/profile');
 	    }
 	});
     } else {
@@ -56,7 +73,7 @@ router.post('/signup', (req, res, next) => {
     		    return next(err);
     		else {
 		    req.session.userId = user._id;
-    		    return res.redirect('/');
+    		    return res.redirect('/profile');
 		}
     	    });
 

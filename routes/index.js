@@ -9,7 +9,12 @@ router.get('/', (req, res, next) => {
 
 // GET /profile
 router.get('/profile', (req, res, next) => {
-    return res.render('profile', { title: 'Profile' });
+    User.findById(req.session.userId).exec((error, user) => {
+	if (error)
+	    return next(error);
+	else
+            return res.render('profile', { title: 'Profile', username: user.username, email: user.email });
+    });
 });
 
 // GET /signout

@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 // mongodb connection
-mongoose.connect(config.DBURI);
+mongoose.connect(config.DBURI, { useNewUrlParser: true });
 let db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));

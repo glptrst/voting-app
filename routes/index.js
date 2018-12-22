@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let User = require('../models/user.js');
+let mid = require('../middleware');
 
 // GET /
 router.get('/', (req, res, next) => {
@@ -30,7 +31,7 @@ router.get('/signout', (req, res, next) => {
 });
 
 // GET /signin
-router.get('/signin', (req, res, next) => {
+router.get('/signin', mid.loggedOut, (req, res, next) => {
     return res.render('signin', { title: 'Sign In' });
 });
 
@@ -55,7 +56,7 @@ router.post('/signin', (req, res, next) => {
 });
 
 // GET /signup
-router.get('/signup', (req, res, next) => {
+router.get('/signup', mid.loggedOut, (req, res, next) => {
     return res.render('signup', { title: 'Sign Up' });
 });
 

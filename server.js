@@ -4,13 +4,23 @@ let bodyParser = require('body-parser');
 let ejs = require('ejs');
 let mongoose = require('mongoose');
 let session = require('express-session');
+let MongoStore = require('connect-mongo')(session);
 let app = express();
+
+// mongodb connection
+mongoose.connect(config.DBURI, { useNewUrlParser: true, useCreateIndex: true });
+let db = mongoose.connection;
+// mongo error
+db.on('error', console.error.bind(console, 'connection error:'));
 
 // use sessions for traking logins
 app.use(session({
     secret: 'boia de',
     resave: true,
     saveUninitialized: false
+    store: new MongoStore({
+	mongooseConnection: db
+    })
 }));
 
 // make user ID available in templates
@@ -18,12 +28,6 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.session.userId;
     next();
 });
-
-// mongodb connection
-mongoose.connect(config.DBURI, { useNewUrlParser: true, useCreateIndex: true });
-let db = mongoose.connection;
-// mongo error
-db.on('error', console.error.bind(console, 'connection error:'));
 
 // parse incoming requests
 app.use(bodyParser.json());

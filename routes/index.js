@@ -8,6 +8,11 @@ router.get('/', (req, res, next) => {
     return res.render('index', { title: 'Home' });
 });
 
+// GET /createpoll
+router.get('/createpoll', (req, res, next) => {
+    return res.render('createPoll', { title: 'Create New Poll' });
+});
+
 // GET /profile
 router.get('/profile', mid.requiresLogin, (req, res, next) => {
     User.findById(req.session.userId).exec((error, user) => {

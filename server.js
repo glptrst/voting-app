@@ -17,7 +17,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(session({
     secret: 'boia de',
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
     store: new MongoStore({
 	mongooseConnection: db
     })

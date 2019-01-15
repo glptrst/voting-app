@@ -8,6 +8,13 @@ router.get('/', (req, res, next) => {
     return res.render('index', { title: 'Home' });
 });
 
+// POST /createpoll
+router.post('/createpoll', (req, res, next) => {
+    let title = req.body.inputTitle;
+    let options = req.body.inputOptions;
+    // TODO
+});
+
 // GET /createpoll
 router.get('/createpoll', (req, res, next) => {
     return res.render('createPoll', { title: 'Create New Poll' });

@@ -22,17 +22,17 @@
 	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 	    <header class="masthead mb-auto">
 		<div class="inner">
-		    <h3 class="masthead-brand"><a href="/" style="color: white">Polls</a></h3>
+		    <h3 class="masthead-brand"><a href="/polls" style="color: white">Polls</a></h3>
 
 		    <% if (!currentUser) { %>
 			<nav class="nav nav-masthead justify-content-center">
-			    <a class="nav-link" href="#">Polls</a>
+			    <a class="nav-link" href="/polls">Polls</a>
 			    <a class="nav-link" href="/signup">Sign up</a>
 			    <a class="nav-link" href="/signin">Sign in</a>
 			</nav>
 		    <% } else { %>
 			<nav class="nav nav-masthead justify-content-center">
-			    <a class="nav-link" href="#">Polls</a>
+			    <a class="nav-link" href="/createPoll">Create Poll</a>
 			    <a class="nav-link" href="/profile">Profile</a>
 			    <a class="nav-link" href="/signout">Sign out</a>
 			</nav>

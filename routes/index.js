@@ -11,7 +11,12 @@ router.get('/', (req, res, next) => {
 // POST /createpoll
 router.post('/createpoll', (req, res, next) => {
     let title = req.body.inputTitle;
-    let options = req.body.inputOptions;
+    let options = req.body.inputOptions.split('\r\n').filter(a => a !== '');
+
+    // 9 options limit
+    if (options.length > 9) return next( new Error('Too many options! 9 is the limit') );
+
+    console.log(options);
     // TODO
 });
 

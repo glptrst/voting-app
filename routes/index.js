@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let User = require('../models/user.js');
+let Poll = require('../models/poll');
 let mid = require('../middleware');
 
 // GET /
@@ -16,12 +17,28 @@ router.post('/createpoll', (req, res, next) => {
     // 9 options limit
     if (options.length > 9) return next( new Error('Too many options! 9 is the limit') );
 
-    console.log(options);
-    // TODO
+    // Get user
+    User.findById(req.session.userId, (error, user) => {
+	// Make string 'foo' into object {title: 'foo'}
+	options = options.map(function(a){ return {title: a}; });
+
+	// Create poll object to insert
+	let poll = {
+	    title: title,
+	    author: user. username,
+	    options: options
+	};
+
+	// Insert poll into db
+	Poll.create(poll, (error, doc) => {
+	    if (error) return next(error);
+	    else       return res.redirect('polls_list');
+	});
+    });
 });
 
 // GET /createpoll
-router.get('/createpoll', (req, res, next) => {
+router.get('/createpoll', mid.requiresLogin, (req, res, next) => {
     return res.render('createPoll', { title: 'Create New Poll' });
 });
 

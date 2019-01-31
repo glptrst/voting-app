@@ -4,6 +4,14 @@ let User = require('../models/user.js');
 let Poll = require('../models/poll');
 let mid = require('../middleware');
 
+// GET /polls_list
+router.get('/polls_list', (req, res, next) => {
+    Poll.find({}, (err, polls) => {
+	if (err) return next(err);
+	return res.render('polls_list', { title: 'Polls', polls: polls });
+    });
+});
+
 // GET /
 router.get('/', (req, res, next) => {
     return res.render('index', { title: 'Home' });

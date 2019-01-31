@@ -1,0 +1,13 @@
+<%- include('header'); -%>
+
+<% if (!polls.length) { %>
+    Gosh, there are no polls :O
+<% } else { %>
+    <ul>
+	<% polls.forEach(poll => { %>
+	    <li><a href="#"><%= poll.title %></a></li>
+	<% }) %>
+    </ul>
+<% } %>
+
+<%- include('footer'); -%>

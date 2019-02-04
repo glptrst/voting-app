@@ -4,6 +4,18 @@ let User = require('../models/user.js');
 let Poll = require('../models/poll');
 let mid = require('../middleware');
 
+// GET /poll
+router.get('/poll', (req, res, next) => {
+    Poll.findOne({ title: req.query.title }, (err, poll) => {
+	if (err) return next(err);
+	return res.render('poll', {
+	    pollTitle: poll.title,
+	    pollOptions: poll.options,
+	    pollAuthor: poll.author
+	});
+    });
+});
+
 // GET /polls_list
 router.get('/polls_list', (req, res, next) => {
     Poll.find({}, (err, polls) => {

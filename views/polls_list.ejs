@@ -5,7 +5,7 @@
 <% } else { %>
     <ul>
 	<% polls.forEach(poll => { %>
-	    <li><a href="#"><%= poll.title %></a></li>
+	    <li><a href="/poll?title=<%= poll.title %>"><%= poll.title %></a></li>
 	<% }) %>
     </ul>
 <% } %>

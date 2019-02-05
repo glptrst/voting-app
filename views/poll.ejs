@@ -1,7 +1,19 @@
 <%- include('header'); -%>
 
 <h2><%= pollTitle %></h2>
+<p>Author: <%= pollAuthor %></p>
 
-TODO...
+<ul>
+    <% pollOptions.forEach(function(opt) { %>
+	<li><%= opt.title + " -- votes: " + opt.votes %></li>
+    <% }) %>
+</ul>
+
+<div>
+    Chart: TODO...
+</div>
+<div>
+    Vote: TODO...
+</div>
 
 <%- include('footer'); -%>

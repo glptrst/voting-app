@@ -40,7 +40,7 @@ router.post('/createpoll', (req, res, next) => {
     // Get user
     User.findById(req.session.userId, (error, user) => {
 	// Make string 'foo' into object {title: 'foo'}
-	options = options.map(function(a){ return {title: a}; });
+	options = options.map(function(a){ return {title: a, votes: 0}; });
 
 	// Create poll object to insert
 	let poll = {

@@ -5,15 +5,19 @@
 
 <ul>
     <% pollOptions.forEach(function(opt) { %>
-	<li><%= opt.title + " -- votes: " + opt.votes %></li>
+	<li class="chartData"><%= opt.title + " -- votes: " + opt.votes %></li>
     <% }) %>
 </ul>
 
 <div>
     Chart: TODO...
 </div>
+<canvas id="chart" width="400" height="400"></canvas>
 <div>
     Vote: TODO...
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="scripts/poll_chart.js"></script>
 
 <%- include('footer'); -%>

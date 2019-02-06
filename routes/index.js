@@ -26,7 +26,10 @@ router.get('/polls_list', (req, res, next) => {
 
 // GET /
 router.get('/', (req, res, next) => {
-    return res.render('index', { title: 'Home' });
+    if (req.session.userId)
+	return res.redirect('/polls_list');
+    else
+	return res.render('index', { title: 'Home' });
 });
 
 // POST /createpoll

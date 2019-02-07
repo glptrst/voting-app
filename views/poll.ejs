@@ -3,16 +3,23 @@
 <h2><%= pollTitle %></h2>
 <p>Author: <%= pollAuthor %></p>
 
-<ul>
-    <% pollOptions.forEach(function(opt) { %>
-	<li class="chartData"><%= opt.title + " -- votes: " + opt.votes %></li>
-    <% }) %>
-</ul>
+<div style="display: none;">
+    <ul>
+	<% pollOptions.forEach(function(opt) { %>
+	    <li class="chartLabels"><%= opt.title %></li>
+	<% }) %>
+    </ul>
+    <ul>
+	<% pollOptions.forEach(function(opt) { %>
+	    <li class="chartData"><%= opt.votes %></li>
+	<% }) %>
+    </ul>
+</div>
 
 <div>
-    Chart: TODO...
+    <canvas id="chart" width="400" height="400"></canvas>
 </div>
-<canvas id="chart" width="400" height="400"></canvas>
+
 <div>
     Vote: TODO...
 </div>

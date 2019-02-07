@@ -1,8 +1,18 @@
-let chartLabels = [ 'test 0', 'test 1', 'test 2'];
-let chartData = [ 1 , 2 , 3];
+let chartLabels = [];
+let chartData = [];
 
-// TODO: user real data
-// let elements = this.document.getElementsByClassName('chartData');
+let labelsElements = this.document.getElementsByClassName('chartLabels');
+for (let i = 0; i < labelsElements.length; i++) {
+    chartLabels.push(labelsElements[i].innerText);
+}
+let dataElements = this.document.getElementsByClassName('chartData');
+for (let i = 0; i < dataElements.length; i++) {
+    chartData.push(dataElements[i].innerText);
+}
+console.log(chartLabels);
+console.log(chartData);
+
+let elements = this.document.getElementsByClassName('chartData');
 
 var ctx = this.document.getElementById('chart').getContext('2d');
 var chart = new Chart(ctx, {

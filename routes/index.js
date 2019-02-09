@@ -4,6 +4,14 @@ let User = require('../models/user.js');
 let Poll = require('../models/poll');
 let mid = require('../middleware');
 
+// POST /poll
+router.post('/poll', (req, res, next) => {
+    let pollTitle = req.body.option.split('<++>')[0]; 
+    let optionTitle = req.body.option.split('<++>')[1]; 
+
+    // TODO
+});
+
 // GET /poll
 router.get('/poll', (req, res, next) => {
     Poll.findOne({ title: req.query.title }, (err, poll) => {

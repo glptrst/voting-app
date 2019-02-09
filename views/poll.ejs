@@ -20,6 +20,20 @@
     <canvas id="chart" width="400" height="400"></canvas>
 </div>
 
+<div>
+    <% if (currentUser) { %>
+	vote:
+	<form method="POST" action="/poll">
+	    <select name="option">
+		<% pollOptions.forEach(function(option) { %>
+		    <option value="<%= pollTitle + "<++>" + option.title %>"><%= option.title %></option>
+		<% }) %>
+	    </select>
+	    <button class="btn btn-primary" type="submit">Submit</button>
+	</form>
+    <% } %>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script src="scripts/poll_chart.js"></script>
 

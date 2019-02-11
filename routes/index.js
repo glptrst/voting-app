@@ -9,7 +9,40 @@ router.post('/poll', (req, res, next) => {
     let pollTitle = req.body.option.split('<++>')[0]; 
     let optionTitle = req.body.option.split('<++>')[1]; 
 
-    // TODO
+    // check if user has already voted for this poll
+    User.findById(req.session.userId, function(error, user) {
+	if (error) {
+	    return next(error);
+	} else {
+	    if (user.pollsHasParticipatedIn.includes(pollTitle)) {
+		let err = new Error('You can vote only once in a poll!');
+		err.status = 403;
+		return next(err);
+	    } else {
+		user.pollsHasParticipatedIn.push(pollTitle);
+		user.save();
+
+		// add vote to db
+		Poll.findOne({title: pollTitle}, function(err, poll) {
+		    if (err) {
+			return next(err);
+		    }
+		    poll.options.forEach(function(option){
+			if (option.title === optionTitle) {
+			    option.votes += 1;
+			}
+		    });// ANY BETTER WAY TO DO THIS?!?
+		    poll.save();
+
+		    return res.render('poll', { title: pollTitle,
+						pollTitle: pollTitle,
+						pollOptions: poll.options,
+						pollAuthor: poll.author });
+		});
+	    }
+	}
+    });
+
 });
 
 // GET /poll

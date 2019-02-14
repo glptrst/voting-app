@@ -3,6 +3,7 @@ let router = express.Router();
 let User = require('../models/user.js');
 let Poll = require('../models/poll');
 let mid = require('../middleware');
+let bcrypt = require('bcrypt');
 
 // POST /poll
 router.post('/poll', (req, res, next) => {
@@ -164,23 +165,25 @@ router.post('/signup', (req, res, next) => {
     	req.body.inputPassword && req.body.inputConfirmPassword)
     {
     	if (req.body.inputPassword === req.body.inputConfirmPassword) {
+	    bcrypt.hash(req.body.inputPassword, 10, function(err, hash) {
+		if (err) return next(err);
 
-    	    let userData = {
-    		username: req.body.inputUsername,
-    		email: req.body.inputEmail,
-    		password: req.body.inputPassword
-    	    };
-	    
-	    // use schema's `create` method to insert document into Mongo
-    	    User.create(userData, (err, user) => {
-    		if (err)
-    		    return next(err);
-    		else {
-		    req.session.userId = user._id;
-    		    return res.redirect('/profile');
-		}
-    	    });
-
+    		let userData = {
+    		    username: req.body.inputUsername,
+    		    email: req.body.inputEmail,
+    		    password: hash
+    		};
+		
+		// use schema's `create` method to insert document into Mongo
+    		User.create(userData, (err, user) => {
+    		    if (err)
+    			return next(err);
+    		    else {
+			req.session.userId = user._id;
+    			return res.redirect('/profile');
+		    }
+    		});
+	    });
     	} else {
     	    let err = new Error('Passwords do not match');
     	    err.status = 400;

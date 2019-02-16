@@ -38,7 +38,9 @@ router.post('/poll', (req, res, next) => {
 		    return res.render('poll', { title: pollTitle,
 						pollTitle: pollTitle,
 						pollOptions: poll.options,
-						pollAuthor: poll.author });
+						pollAuthor: poll.author,
+						userCanVote: false
+					      });
 		});
 	    }
 	}
@@ -50,11 +52,33 @@ router.post('/poll', (req, res, next) => {
 router.get('/poll', (req, res, next) => {
     Poll.findOne({ title: req.query.title }, (err, poll) => {
 	if (err) return next(err);
-	return res.render('poll', {
-	    pollTitle: poll.title,
-	    pollOptions: poll.options,
-	    pollAuthor: poll.author
-	});
+	if (req.session.userId) { // if user is logged
+	    User.findById(req.session.userId, function(error, user) {// look at whom s/he is
+		if (error) return next(error);
+		// if user has already voted
+		if (user.pollsHasParticipatedIn.includes(poll.title)) {
+		    return res.render('poll', {
+			pollTitle: poll.title,
+			pollOptions: poll.options,
+			pollAuthor: poll.author,
+			userCanVote: false
+		    });
+		} else {
+		    return res.render('poll', {
+			pollTitle: poll.title,
+			pollOptions: poll.options,
+			pollAuthor: poll.author,
+			userCanVote: true
+		    });
+		}
+	    });
+	} else {
+	    return res.render('poll', {
+		pollTitle: poll.title,
+		pollOptions: poll.options,
+		pollAuthor: poll.author
+	    });
+	}
     });
 });
 

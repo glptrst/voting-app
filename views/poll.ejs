@@ -22,15 +22,19 @@
 
 <div>
     <% if (currentUser) { %>
-	vote:
-	<form method="POST" action="/poll">
-	    <select name="option">
-		<% pollOptions.forEach(function(option) { %>
-		    <option value="<%= pollTitle + "<++>" + option.title %>"><%= option.title %></option>
-		<% }) %>
-	    </select>
-	    <button class="btn btn-primary" type="submit">Submit</button>
-	</form>
+	<% if (userCanVote) { %>
+	    vote:
+	    <form method="POST" action="/poll">
+		<select name="option">
+		    <% pollOptions.forEach(function(option) { %>
+			<option value="<%= pollTitle + "<++>" + option.title %>"><%= option.title %></option>
+		    <% }) %>
+		</select>
+		<button class="btn btn-primary" type="submit">Submit</button>
+	    </form>
+	<% } else { %>
+	    You have already voted in this poll.
+	<% } %>
     <% } %>
 </div>
 

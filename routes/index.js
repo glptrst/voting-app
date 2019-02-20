@@ -15,7 +15,7 @@ router.post('/poll', (req, res, next) => {
 	if (error) {
 	    return next(error);
 	} else {
-	    if (user.pollsHasParticipatedIn.includes(pollTitle)) {
+	    if (user.pollsHasParticipatedIn.filter(poll => poll.title === pollTitle).length !== 0) {
 		let err = new Error('You can vote only once in a poll!');
 		err.status = 403;
 		return next(err);
@@ -56,7 +56,8 @@ router.get('/poll', (req, res, next) => {
 	    User.findById(req.session.userId, function(error, user) {// look at whom s/he is
 		if (error) return next(error);
 		// if user has already voted
-		if (user.pollsHasParticipatedIn.includes(poll.title)) { // TODO: change this to make it work given the last commit
+              //if (user.pollsHasParticipatedIn.includes(poll.title)) { // TODO: change this to make it work given the last commit
+		if (user.pollsHasParticipatedIn.filter(p => p.title === poll.title).length !== 0) {
 		    return res.render('poll', {
 			pollTitle: poll.title,
 			pollOptions: poll.options,

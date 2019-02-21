@@ -35,12 +35,7 @@ router.post('/poll', (req, res, next) => {
 		    });// ANY BETTER WAY TO DO THIS?!?
 		    poll.save();
 
-		    return res.render('poll', { title: pollTitle,
-						pollTitle: pollTitle,
-						pollOptions: poll.options,
-						pollAuthor: poll.author,
-						userCanVote: false
-					      });
+		    return res.redirect('/poll?title=' + pollTitle);
 		});
 	    }
 	}
@@ -55,14 +50,15 @@ router.get('/poll', (req, res, next) => {
 	if (req.session.userId) { // if user is logged
 	    User.findById(req.session.userId, function(error, user) {// look at whom s/he is
 		if (error) return next(error);
-		// if user has already voted
-              //if (user.pollsHasParticipatedIn.includes(poll.title)) { // TODO: change this to make it work given the last commit
-		if (user.pollsHasParticipatedIn.filter(p => p.title === poll.title).length !== 0) {
+		let pollObj = user.pollsHasParticipatedIn.filter(p => p.title === poll.title);
+		if (pollObj.length !== 0) {// if user has already voted
+		    let vote = pollObj[0].vote;
 		    return res.render('poll', {
 			pollTitle: poll.title,
 			pollOptions: poll.options,
 			pollAuthor: poll.author,
-			userCanVote: false
+			userCanVote: false,
+			userVote: vote
 		    });
 		} else {
 		    return res.render('poll', {
@@ -100,7 +96,7 @@ router.get('/', (req, res, next) => {
 });
 
 // POST /createpoll
-router.post('/createpoll', (req, res, next) => {
+router.post('/createpoll', mid.requiresLogin, (req, res, next) => {
     let title = req.body.inputTitle;
     let options = req.body.inputOptions.split('\r\n').filter(a => a !== '');
 

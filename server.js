@@ -5,10 +5,11 @@ let ejs = require('ejs');
 let mongoose = require('mongoose');
 let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
+const nodemailer = require('nodemailer');
 let app = express();
 
 // mongodb connection
-mongoose.connect(config.DBURI, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(config.db.DBURI, { useNewUrlParser: true, useCreateIndex: true });
 let db = mongoose.connection;
 // mongo error
 db.on('error', console.error.bind(console, 'connection error:'));

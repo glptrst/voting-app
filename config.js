@@ -8,11 +8,11 @@ module.exports = {
 	DBURI: process.env.DBURI || configVariables.db.DBURI,
     },
     mail: {
-	sender: configVariables.mail.sender,
-	host: configVariables.mail.host,
-	port: configVariables.mail.port,
-	secure: configVariables.mail.secure,
-	user: configVariables.mail.user,
-	pass: configVariables.mail.pass
+	sender: process.env.sender || configVariables.mail.sender,
+	host: process.env.host || configVariables.mail.host,
+	port: process.env.port || configVariables.mail.port,
+	secure: process.env.secure || configVariables.mail.secure,
+	user: process.env.user || configVariables.mail.user,
+	pass: process.env.pass || configVariables.mail.pass
     }
 };

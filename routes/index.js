@@ -209,8 +209,8 @@ router.post('/signup', (req, res, next) => {
 			    // create reusable transporter object using the default SMTP transport
 			    let transporter = nodemailer.createTransport({
 				host: config.mail.host,
-				port: config.mail.port,
-				secure: config.mail.secure,
+				port: 587,
+				secure: false,
 				auth: {
 				    user: config.mail.user,
 				    pass: config.mail.pass

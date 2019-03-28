@@ -1,4 +1,5 @@
-var config = require('../config.js');
+const config = require('../config.js');
+const functions = require('../functions/myfunctions.js');
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user.js');
@@ -204,33 +205,8 @@ router.post('/signup', (req, res, next) => {
     		    else {
 			req.session.userId = user._id;
 
-			//send confirmation email
-			async function sendEmail(){
-			    // create reusable transporter object using the default SMTP transport
-			    let transporter = nodemailer.createTransport({
-				host: config.mail.host,
-				port: 587,
-				secure: false,
-				auth: {
-				    user: config.mail.user,
-				    pass: config.mail.pass
-				}
-			    });
-
-			    let mailOptions = {
-				from: config.mail.sender, // sender address
-				to: req.body.inputEmail, // list of receivers
-				subject: "Registration", // Subject line
-				text: "You successfully registered to Polls", // plain text body
-			    };
-
-			    // send mail with defined transport object
-			    let info = await transporter.sendMail(mailOptions);
-
-			    console.log("Message sent: %s", info.messageId);
-			}
-
-			sendEmail().catch(console.error);
+			// send confirmation email to user
+			functions.sendEmail(req.body.inputEmail).catch(console.error);
 
     			return res.redirect('/profile');
 		    }
